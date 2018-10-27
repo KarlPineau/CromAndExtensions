@@ -1,4 +1,4 @@
-<rdf:RDF xml:lang="en" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xml:base="http://www.cidoc-crm.org/cidoc-crm/" xmlns:la="http://linked.art/ns/terms/">
+<rdf:RDF xml:lang="en" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xml:base="http://www.cidoc-crm.org/cidoc-crm/">
   <rdf:Property rdf:about="P1_is_identified_by">
     <owl:inverseOf rdf:resource="P1i_identifies"/>
   </rdf:Property>
@@ -808,5 +808,41 @@
   </rdf:Property>
   <rdf:Property rdf:about="P180i_was_currency_of">
     <owl:inverseOf rdf:resource="P180_has_currency"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="J1_used_as_premise">
+    <owl:inverseOf rdf:resource="J1i_was_premise_for"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="J1i_was_premise_for">
+    <owl:inverseOf rdf:resource="J1_used_as_premise"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="J2_concluded_that">
+    <owl:inverseOf rdf:resource="J2i_was_concluded_by"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="J2i_was_concluded_by">
+    <owl:inverseOf rdf:resource="J2_concluded_that"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="J3_applies">
+    <owl:inverseOf rdf:resource="J3i_was_applied_by"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="J3i_was_applied_by">
+    <owl:inverseOf rdf:resource="J3_applies"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="J4_that">
+    <owl:inverseOf rdf:resource="J4i_is_subject_of"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="J4i_is_subject_of">
+    <owl:inverseOf rdf:resource="J4_that"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="J6_adopted">
+    <owl:inverseOf rdf:resource="J6i_adopted_by"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="J6i_adopted_by">
+    <owl:inverseOf rdf:resource="J6_adopted"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="J7_is_based_on_evidence">
+    <owl:inverseOf rdf:resource="J7i_is_evidence_for"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="J7_is_based_on_evidence">
+    <owl:inverseOf rdf:resource="J7_is_based_on_evidence_from"/>
   </rdf:Property>
 </rdf:RDF>

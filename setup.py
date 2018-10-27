@@ -7,19 +7,19 @@ else:
     install_requires = []
 
 setup(
-    name = 'cromulent',
-    packages = ['cromulent'],
+    name = 'CromAndExtensions',
+    packages = ['CromAndExtensions'],
     package_data = {
-        'cromulent': ['data/crm_vocab.tsv', 'data/overrides.json', 
+        'CromAndExtensions': ['data/crm_vocab.tsv', 'data/overrides.json',
         'data/key_order.json', 'data/linked-art.json', 
         'data/cidoc-extension.json', 'data/crm-profile.json']
     },
     test_suite="tests",
-    version = '0.9.7',
-    description = 'A library for mapping CIDOC-CRM classes to Python objects',
-    author = 'Rob Sanderson',
-    author_email = 'rsanderson@getty.edu',
-    url = 'https://github.com/thegetty/crom',
+    version = '0.1',
+    description = 'Mapping CIDOC-CRM classes & extensions to Python objects',
+    author = 'Karl Pineau, fork Rob Sanderson',
+    author_email = 'karl.pineau@utc.fr',
+    url = '',
     install_requires=install_requires,
     classifiers = [
         "Programming Language :: Python",

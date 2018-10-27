@@ -10,7 +10,6 @@ import uuid
 
 KEY_ORDER_HASH = {}
 KEY_ORDER_DEFAULT = 10000
-LINKED_ART_CONTEXT_URI = "https://linked.art/ns/v1/linked-art.json"
 CRM_EXT_CONTEXT_URI = "https://linked.art/ns/v1/cidoc-extension.json"
 
 try:
@@ -99,8 +98,6 @@ class CromulentFactory(object):
 		# Maybe load it up for prefixes
 		if load_context:
 			context_filemap = {
-				LINKED_ART_CONTEXT_URI: 
-					os.path.join(os.path.dirname(__file__), 'data', 'linked-art.json'),
 				CRM_EXT_CONTEXT_URI:
 					os.path.join(os.path.dirname(__file__), 'data', 'cidoc-extension.json')
 			}
@@ -713,6 +710,7 @@ class BaseResource(ExternalResource):
 
 		return OrderedDict(sorted(d.items(), key=lambda x: KOH.get(x[0], 1000)))
 
+
 # Ensure everything can have id, type, label and description
 BaseResource._properties = {'id': {"rdf": "@id", "range": str, "okayToUse": 1}, 
 	'type': {"rdf": "rdf:type", "range": str, "okayToUse": 1}, 
@@ -720,12 +718,14 @@ BaseResource._properties = {'id': {"rdf": "@id", "range": str, "okayToUse": 1},
 }
 BaseResource._classhier = (BaseResource, ExternalResource)
 
+
 def process_tsv(fn):
 	fh = codecs.open(fn, 'r', 'utf-8')
 	lines = fh.readlines()
 	fh.close()
-	vocabData = {"rdf:Resource": 
-		{"props": [], "label": "Resource", "className": "Resource", 
+
+	vocabData = {"rdf:Resource":
+		{"props": [], "label": "Resource", "className": "Resource",
 		"subs":[], "desc": "", "class": BaseResource, "okay": 1}}
 
 	for l in lines:
@@ -763,6 +763,7 @@ def process_tsv(fn):
 					except:
 						pass
 	return vocabData
+
 
 # Build class heirarchy recursively
 def build_class(crmName, parent, vocabData):
@@ -817,17 +818,16 @@ def build_class(crmName, parent, vocabData):
 			"inverseRdf": invRdf,
 			"okayToUse": okay,
 			"multiple": mult}
- 
+
 	# Build subclasses
 	for s in data['subs']:
 		build_class(s, c, vocabData)
 
-def build_classes(fn=None, top=None):
+
+def build_classes():
 	# Default to building our core dataset
-	if not fn:
-		dd = os.path.join(os.path.dirname(__file__), 'data')
-		fn = os.path.join(dd, 'crm_vocab.tsv')
-		top = 'E1_CRM_Entity'
+	top = 'E1_CRM_Entity'
+	fn = os.path.join(os.path.join(os.path.dirname(__file__), 'data'), 'crm_vocab.tsv')
 
 	vocabData = process_tsv(fn)
 
@@ -863,6 +863,6 @@ def build_classes(fn=None, top=None):
 # and a different context used. But for now ...
 
 # Build the factory first, so properties can be added to key_order
-factory = CromulentFactory("http://lod.example.org/museum/", context="https://linked.art/ns/v1/linked-art.json")
+factory = CromulentFactory("http://lod.example.org/museum/", context="https://linked.art/ns/v1/cidoc-extension.json")
 build_classes()
 

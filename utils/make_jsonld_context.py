@@ -1,17 +1,16 @@
-
 import codecs
 import json
 
 try:
-    from collections import OrderedDict
+	from collections import OrderedDict
 except:
-    try:
-        from ordereddict import OrderedDict
-    except:
-        raise Exception("To run with old pythons you must: easy_install ordereddict")
+	try:
+		from ordereddict import OrderedDict
+	except:
+		raise Exception("To run with old pythons you must: easy_install ordereddict")
 
 
-fn = '../cromulent/data/crm_vocab.tsv'
+fn = '../CromAndExtensions/data/crm_vocab.tsv'
 fh = codecs.open(fn, 'r', 'utf-8')
 lines = fh.readlines()
 fh.close()
@@ -27,7 +26,7 @@ context['schema'] = "http://schema.org/"
 context['skos'] = "http://www.w3.org/2004/02/skos/core#"
 context['foaf'] = 'http://xmlns.com/foaf/0.1/'
 context['xsd'] = "http://www.w3.org/2001/XMLSchema#"
-context["la"] = "https://linked.art/ns/terms/"
+context["dk"] = "http://karlpine.cluster014.ovh.net/decalog-ns/"
 context["aat"]  = "http://vocab.getty.edu/aat/"
 context["ulan"] = "http://vocab.getty.edu/ulan/"
 context["tgn"] = "http://vocab.getty.edu/tgn/"
@@ -66,9 +65,7 @@ for l in lines:
 		used = info[-2]
 		mult = info[11] or '1'
 		which = context if used == "1" else extension
-		if which.has_key(ctname):
-			print "Already found: %s   (%s vs %s)" % (ctname, context[ctname]['@id'], name)
-		else:
+		if ctname not in which:
 			if rng:
 				if rng[0] == "E":
 					typ = "@id"
@@ -88,17 +85,12 @@ for l in lines:
 				else:
 					which[ctname] = {"@id": name, "@type": typ}
 			else:
-				print "scoped context: %s: %s on %s" % (ctname, name, dmn)
+				print("scoped context: %s: %s on %s" % (ctname, name, dmn))
 
 ctxt = {"@context": context}
 xctxt = {"@context": extension}
 
-outstr = json.dumps(ctxt, indent=2)
-fh = file("../cromulent/data/linked-art.json", 'w')
-fh.write(outstr)
-fh.close()
-
 outstr = json.dumps(xctxt, indent=2)
-fh = file("../cromulent/data/cidoc-extension.json", 'w')
-fh.write(outstr)
-fh.close()
+with open("../CromAndExtensions/data/cidoc-extension.json", 'w') as outfile:
+	outfile.write(outstr)
+
