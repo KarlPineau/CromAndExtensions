@@ -60,7 +60,14 @@ def process_classes(dom):
         else:
             classXHash[name] = [c, useflag]
 
-        label = c.xpath('./rdfs:label[@xml:lang="en"]/text()', namespaces=NS)[0]
+        try:
+            label = c.xpath('./rdfs:label[@xml:lang="en"]/text()', namespaces=NS)[0]
+        except:
+            if len(c.xpath('@rdfs:label', namespaces=NS)) > 0:
+                label = c.xpath('@rdfs:label', namespaces=NS)[0]
+            else:
+                label = "Unknown"
+
         try:
             comment = c.xpath('./rdfs:comment/text()', namespaces=NS)[0]
             comment = comment.strip()
@@ -114,7 +121,11 @@ def process_props(dom):
         useflags = profile_flags.get(name, [0,0]) or [0,0]
         propXHash[name] = [p, useflags[0]]
 
-        label = p.xpath('./rdfs:label[@xml:lang="en"]/text()', namespaces=NS)[0]
+        try:
+            label = p.xpath('./rdfs:label[@xml:lang="en"]/text()', namespaces=NS)[0]
+        except:
+            label = p.xpath('@rdfs:label', namespaces=NS)[0]
+
         try:
             comment = p.xpath('./rdfs:comment/text()', namespaces=NS)[0]
             comment = comment.strip()
@@ -175,7 +186,7 @@ def process_props(dom):
             str(useflags[0]), str(useflags[1])])
 
 
-files = ['cidoc.xml', 'decalog.xml', 'decalog_crm_enhancements.xml', 'crminf.xml']
+files = ['cidoc.xml', 'decalog.xml', 'decalog_crm_enhancements.xml', 'crminf.xml', 'frbroo.xml']
 
 for fn in files:
     print("processing: %s" % fn)
